@@ -31,7 +31,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class ParamFlowRuleEntity extends AbstractRuleEntity<ParamFlowRule> {
 
-    public ParamFlowRuleEntity() {}
+    public ParamFlowRuleEntity() {
+    }
 
     public ParamFlowRuleEntity(ParamFlowRule rule) {
         AssertUtil.notNull(rule, "Authority rule should not be null");
@@ -76,6 +77,17 @@ public class ParamFlowRuleEntity extends AbstractRuleEntity<ParamFlowRule> {
         return rule.getParamFlowItemList();
     }
 
+
+    /**
+     * 修复json反序列化bug。
+     * 当字符串含有list的属性，并且list的get方法存在时，需要有相应的set方法。否则反序列化报错
+     *
+     * @param flowItemList
+     */
+    public void setParamFlowItemList(List<ParamFlowItem> flowItemList) {
+        // 忽略。这个属性不保存值
+    }
+
     @JsonIgnore
     public boolean isClusterMode() {
         return rule.isClusterMode();
@@ -85,7 +97,7 @@ public class ParamFlowRuleEntity extends AbstractRuleEntity<ParamFlowRule> {
     public ParamFlowClusterConfig getClusterConfig() {
         return rule.getClusterConfig();
     }
-    
+
     @Override
     public Rule toRule() {
         return rule;

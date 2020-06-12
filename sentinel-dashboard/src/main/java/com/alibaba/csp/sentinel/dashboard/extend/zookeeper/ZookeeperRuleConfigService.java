@@ -56,8 +56,8 @@ public class ZookeeperRuleConfigService implements InitializingBean, RuleConfigS
         byte[] bytes = new byte[0];
         try {
             bytes = zkClient.getData().forPath(path);
-        } catch (KeeperException.NoNodeException e) {
-            logger.warn("no node", e);
+        } catch (KeeperException.NoNodeException ignored) {
+            //节点不存在，没有保存过值。忽略
         }
         if (null == bytes || bytes.length == 0) {
             logger.info("getRules success,path={},rules is null", path);
